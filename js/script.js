@@ -11,20 +11,18 @@ for (let heartBtn of heartButtons){
 }
 
 // call button click function
-// সব DOM element ধরে রাখি
+
 const callButtons = document.querySelectorAll('.call-btn');
 const coinCountEl = document.getElementById('coin-count');
 const callHistoryList = document.getElementById('call-history-list');
 const clearHistoryBtn = document.getElementById('clear-history');
 
-// সময় বের করার function
+
 function getCurrentTime() {
   const now = new Date();
   return now.toLocaleTimeString();
 }
 
-
-// সব call button এর জন্য event listener
 for (const button of callButtons) {
   button.addEventListener('click', function () {
     const card = button.closest('div.bg-white');
@@ -41,12 +39,8 @@ for (const button of callButtons) {
         alert("🚫 Not enough coins to make the call!");
         return;
       }
-
-      // Coin কমাও
       const newCoin = coinNumber - 20;
       coinCountEl.innerHTML = `${newCoin} <img class="w-[30px] h-[30px]" src="./B12-A5-Emergency-Hotline/assets/coin.png" alt="">`;
-
-      // Call history তে add করো
       const li = document.createElement('li');
       li.textContent = `${serviceName} (${number}) - ${getCurrentTime()}`;
       callHistoryList.appendChild(li);
@@ -60,3 +54,19 @@ for (const button of callButtons) {
 clearHistoryBtn.addEventListener('click', function () {
   callHistoryList.innerHTML = '';
 });
+
+// copy button function
+
+const navCopyBtn = document.querySelector("nav .copy-btn");
+let copyCount = 0;
+const copyButtons = document.querySelectorAll(".card .copy-btn");
+
+for (const btn of copyButtons) {
+  btn.addEventListener("click", function () {
+    const number = btn.closest(".card").querySelector("h1.text-3xl").innerText;
+    navigator.clipboard.writeText(number);
+    alert(`Number copied: ${number}`);
+    copyCount++;
+    navCopyBtn.innerText = `${copyCount} Copy`;
+  });
+}
